@@ -17,7 +17,7 @@ void removeNode (AVL_Node *node, int key) {
   
 }
 
-void searchNode (AVL_Node *node, int key) {
+AVL_Node* searchNode (AVL_Node *node, int key) {
     AVL_Node * aux = node;
 
     while (aux) {
