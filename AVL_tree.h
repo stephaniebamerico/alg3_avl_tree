@@ -8,6 +8,7 @@
 
 typedef struct AVL_Node {
 	int key;
+    struct AVL_Node *p;
     struct AVL_Node *left;
     struct AVL_Node *right;
     // Height of the node, 
@@ -17,12 +18,12 @@ typedef struct AVL_Node {
     unsigned int height; 
 } AVL_Node;
 
-struct AVL_Node* newNode(int key)
-
+void insertNode (AVL_Node *node, int key);
 void removeNode (AVL_Node *node, int key); 
+void searchNode (AVL_Node *node, int key);
 
 void balance (AVL_Node *node);
-
+struct AVL_Node* newNode(int key);
 AVL_Node rotateLeft (AVL_Node *node);
 AVL_Node rotateRight (AVL_Node *node);
 

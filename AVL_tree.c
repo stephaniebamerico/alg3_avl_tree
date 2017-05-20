@@ -9,26 +9,27 @@
 
 int getBalanceFactor (AVL_Node node);
 
-AVL_Node* newNode(int key) {
-    AVL_Node* node = 
-    		(AVL_Node*) malloc(sizeof(AVL_Node));
-    // New node is initially added at leaf
-    node->key = key;
-    node->left = NULL;
-    node->right = NULL;
-    node->height = 1; // Leaf height is 1
-    return(node);
-}
+void insertNode (AVL_Node *node, int key) {
 
-int getBalanceFactor (AVL_Node node) {
-    unsigned l, r;
-    l = (node.left)  ? node.left.height  : 0;
-    r = (node.right) ? node.right.height : 0;
-    return (l-r);
 }
 
 void removeNode (AVL_Node *node, int key) {
+  
+}
 
+void searchNode (AVL_Node *node, int key) {
+    AVL_Node * aux = node;
+
+    while (aux) {
+        if (aux->key == key)
+            return aux;
+        else if (aux->key > key)
+            aux = aux->left;
+        else
+            aux = aux->right;
+    }
+
+    return NULL;
 }
 
 AVL_Node* balance (AVL_Node *node) {
@@ -41,7 +42,7 @@ AVL_Node* balance (AVL_Node *node) {
      (1) (?)         (?)
           |
           v
-  can or not have this child 
+    can or not have this child 
     */
     if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0)
         node = rotateLeft(node);
@@ -67,7 +68,7 @@ AVL_Node* balance (AVL_Node *node) {
         (?) (3)       (?)
          |
          v
-can or not have this child   
+      can or not have this child   
 
     */
     else if (balanceFactor < -1 && getBalanceFactor(node.right) <= 0)
@@ -86,4 +87,30 @@ can or not have this child
         node = rotateLeft(node);
     }
     return (node);
+}
+
+AVL_Node* newNode(int key) {
+    AVL_Node* node = 
+        (AVL_Node*) malloc(sizeof(AVL_Node));
+    // New node is initially added at leaf
+    node->key = key;
+    node->left = NULL;
+    node->right = NULL;
+    node->height = 1; // Leaf height is 1
+    return(node);
+}
+
+AVL_Node rotateLeft (AVL_Node *node) {
+
+}
+
+AVL_Node rotateRight (AVL_Node *node) {
+
+}
+
+int getBalanceFactor (AVL_Node node) {
+    unsigned l, r;
+    l = (node.left)  ? node.left.height  : 0;
+    r = (node.right) ? node.right.height : 0;
+    return (l-r);
 }
