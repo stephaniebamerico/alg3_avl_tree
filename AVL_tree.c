@@ -61,8 +61,11 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
         // 2 childs
         else
         {
+            //encontra precessor
             AVL_Node *aux = predecessor(node);
+            // chave do nodo vira chave do precessor
             node->key = aux->key;
+            // deleta o nodo do precessor
             node.left = removeNode (node->left, aux->key);
         }
     }
@@ -162,6 +165,15 @@ AVL_Node* newNode(int key) {
 }
 
 AVL_Node rotateLeft (AVL_Node *node) {
+
+    AVL_Node auxChild = node->right, auxGranChild = auxChild->left;
+    
+    auxChild->left = node;
+    node->right = auxGranChild;
+
+    node->height = 1 + maxChildrenHeight (node);
+    auxChild->height = 1 + maxChildrenHeight (auxChild);
+    return (auxChild);
 
 }
 
