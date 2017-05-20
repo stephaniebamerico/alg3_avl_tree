@@ -5,6 +5,6 @@ Operações em uma AVL
 ### Busca
 ## Grupo:
 Stephanie Briere Americo
-- GRR20165313
-Talita Halboth Cunha Fernandes
-- GRR20165399
+* GRR20165313 
+* Talita Halboth Cunha Fernandes
+* GRR20165399
