@@ -17,6 +17,8 @@ typedef struct AVL_Node {
     unsigned int height; 
 } AVL_Node;
 
-struct AVL_Node* newNode(int key);
+struct AVL_Node* newNode(int key)
+
+void removeNode (AVL_Node node, int key); 
 
 #endif
