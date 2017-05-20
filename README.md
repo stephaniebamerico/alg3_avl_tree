@@ -4,7 +4,7 @@ Operações em uma AVL
 ### Remoção
 ### Busca
 ## Grupo:
-Stephanie Briere Americo
+* Stephanie Briere Americo
 * GRR20165313 
 * Talita Halboth Cunha Fernandes
 * GRR20165399
