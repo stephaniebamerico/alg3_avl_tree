@@ -14,6 +14,8 @@ AVL_Node rotateRight (AVL_Node *node);
 int getBalanceFactor (AVL_Node node);
 int maxChildrenHeight (AVL_Node node);
 
+/* ===== External Functions ===== */
+
 AVL_Node* insertNode (AVL_Node *node, int key) {
     /* If the node does not exist, it creates 
        and no change in its height is required
@@ -57,6 +59,8 @@ void searchNode (AVL_Node *node, int key) {
             aux = aux->right;
     }
 }
+
+/* ===== Internal Functions ===== */
 
 AVL_Node* balance (AVL_Node *node) {
     unsigned balanceFactor = getBalanceFactor (node);

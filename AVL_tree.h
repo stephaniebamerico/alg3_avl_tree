@@ -21,9 +21,4 @@ typedef struct AVL_Node {
 AVL_Node* insertNode (AVL_Node *node, int key);
 void removeNode (AVL_Node *node, int key); 
 void searchNode (AVL_Node *node, int key);
-
-void balance (AVL_Node *node);
-AVL_Node* newNode(int key);
-AVL_Node rotateLeft (AVL_Node *node);
-AVL_Node rotateRight (AVL_Node *node);
 #endif
