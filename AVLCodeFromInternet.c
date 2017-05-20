@@ -179,19 +179,10 @@ struct Node* deleteNode(struct Node* root, int key)
         // node with only one child or no child
         if( (root->left == NULL) || (root->right == NULL) )
         {
-            struct Node *temp = root->left ? root->left :
+           root = root->left ? root->left :
                                              root->right;
  
-            // No child case
-            if (temp == NULL)
-            {
-                temp = root;
-                root = NULL;
-            }
-            else // One child case
-             *root = *temp; // Copy the contents of
-                            // the non-empty child
-            free(temp);
+          
         }
         else
         {
