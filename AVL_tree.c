@@ -13,6 +13,7 @@ AVL_Node rotateLeft (AVL_Node *node);
 AVL_Node rotateRight (AVL_Node *node);
 int getBalanceFactor (AVL_Node node);
 int maxChildrenHeight (AVL_Node node);
+AVL_Node* predecessor (AVL_Node *node);
 
 /* ===== External Functions ===== */
 
@@ -39,13 +40,6 @@ AVL_Node* insertNode (AVL_Node *node, int key) {
 
     // Finally, balance the tree (if necessary)
     node = balance(node);
-}
-
-AVL_Node* predecessor (AVL_Node *node) {
-    AVL_Node *aux = node->left;
-    while (aux->right)
-        aux = aux->right;
-    return (aux);
 }
 
 AVL_Node* removeNode (AVL_Node *node, int key) {
@@ -187,4 +181,11 @@ int maxChildrenHeight (AVL_Node node) {
     l = (node.left)  ? node.left.height  : 0;
     r = (node.right) ? node.right.height : 0;
     return (l > r) ? l : r;
+}
+
+AVL_Node* predecessor (AVL_Node *node) {
+    AVL_Node *aux = node->left;
+    while (aux->right)
+        aux = aux->right;
+    return (aux);
 }
