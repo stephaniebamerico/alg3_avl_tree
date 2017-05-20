@@ -26,5 +26,4 @@ void balance (AVL_Node *node);
 AVL_Node* newNode(int key);
 AVL_Node rotateLeft (AVL_Node *node);
 AVL_Node rotateRight (AVL_Node *node);
-AVL_Node* searchNode (AVL_Node *node, int key);
 #endif

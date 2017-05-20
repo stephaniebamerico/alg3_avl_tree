@@ -17,7 +17,7 @@ void removeNode (AVL_Node *node, int key) {
   
 }
 
-void searchNodePrinter (AVL_Node *node, int key) {
+void searchNode (AVL_Node *node, int key) {
     AVL_Node * aux = node;
 
     while (aux) {
@@ -110,21 +110,6 @@ AVL_Node rotateLeft (AVL_Node *node) {
 
 AVL_Node rotateRight (AVL_Node *node) {
 
-}
-
-AVL_Node* searchNode (AVL_Node *node, int key) {
-    AVL_Node * aux = node;
-
-    while (aux) {
-        if (aux->key == key)
-            return aux;
-        else if (aux->key > key)
-            aux = aux->left;
-        else
-            aux = aux->right;
-    }
-
-    return NULL;
 }
 
 int getBalanceFactor (AVL_Node node) {
