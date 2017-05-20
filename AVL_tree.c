@@ -1,16 +1,39 @@
-/*== Stephanie Briere Americo
-		GRR20165313 ==*/
-/*== Talita Halboth Cunha Fernandes
-		GRR20165399 ==*/
+/* Stephanie Briere Americo
+         GRR20165313         */
+/* Talita Halboth Cunha Fernandes
+         GRR20165399         */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "AVL_Tree"
 
+void balance (AVL_Node *node);
+AVL_Node* newNode(int key);
+AVL_Node rotateLeft (AVL_Node *node);
+AVL_Node rotateRight (AVL_Node *node);
 int getBalanceFactor (AVL_Node node);
+int maxChildrenHeight (AVL_Node node);
 
-void insertNode (AVL_Node *node, int key) {
+AVL_Node* insertNode (AVL_Node *node, int key) {
+    /* If the node does not exist, it creates 
+       and no change in its height is required
+       (sheet has height 0) */
+    if (!node)
+        return newNode(key);
+    
+    /* If the node has a key larger than the new entry, 
+       it creates the new node in the left subtree. */
+    if (node->key > key)
+        insertNode(node->left);
 
+    /* If the node has a key less than or equal 
+       to the new entry, it creates the new node
+       in the right subtree. */
+    else
+        insertNode(node->right);
+
+    // Updates node height
+    node->height = 1 + maxChildrenHeight(node);
 }
 
 AVL_Node *removeNode (AVL_Node *node, int key) {
@@ -40,11 +63,11 @@ AVL_Node *removeNode (AVL_Node *node, int key) {
 
 }
 
-void searchNodePrinter (AVL_Node *node, int key) {
+void searchNode (AVL_Node *node, int key) {
     AVL_Node * aux = node;
 
     while (aux) {
-        if(aux == root)
+        if (aux == root)
           printf("%d\n", aux->key);  
         else
           printf(",%d\n", aux->key);
@@ -135,24 +158,16 @@ AVL_Node rotateRight (AVL_Node *node) {
 
 }
 
-AVL_Node* searchNode (AVL_Node *node, int key) {
-    AVL_Node * aux = node;
-
-    while (aux) {
-        if (aux->key == key)
-            return aux;
-        else if (aux->key > key)
-            aux = aux->left;
-        else
-            aux = aux->right;
-    }
-
-    return NULL;
-}
-
 int getBalanceFactor (AVL_Node node) {
     unsigned l, r;
     l = (node.left)  ? node.left.height  : 0;
     r = (node.right) ? node.right.height : 0;
     return (l-r);
+}
+
+int maxChildrenHeight (AVL_Node node) {
+  unsigned l, r;
+    l = (node.left)  ? node.left.height  : 0;
+    r = (node.right) ? node.right.height : 0;
+    return (l > r) ? l : r;
 }
