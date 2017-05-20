@@ -147,8 +147,9 @@ void preOrder(struct Node *root)
 {
     if(root != NULL)
     {
-        printf("%d ", root->key);
+        
         preOrder(root->left);
+        printf("%d ", root->key);
         preOrder(root->right);
     }
 }
@@ -159,12 +160,12 @@ int main()
   struct Node *root = NULL;
  
   /* Constructing tree given in the above figure */
-  root = insert(root, 10);
-  root = insert(root, 20);
-  root = insert(root, 30);
-  root = insert(root, 40);
-  root = insert(root, 50);
-  root = insert(root, 25);
+  root = insert(root, 1);
+  root = insert(root, 2);
+  root = insert(root, 3);
+  root = insert(root, 4);
+  root = insert(root, 5);
+  root = insert(root, 6);
  
   /* The constructed AVL Tree would be
             30
