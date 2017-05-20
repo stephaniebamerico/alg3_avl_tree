@@ -13,8 +13,31 @@ void insertNode (AVL_Node *node, int key) {
 
 }
 
-void removeNode (AVL_Node *node, int key) {
-  
+AVL_Node *removeNode (AVL_Node *node, int key) {
+    
+    if (node == NULL)
+        return (node);
+    // if key is less than node's key, go to the left
+    if (key < node->key) 
+        nodo->left = removeNode (node->left);
+    // if key is greater than node's key, go to the right
+    else if (key > node->key)
+        node->right = removeNode (node->right);
+    // we are on the right node!
+    else {
+        //if there's 1 or 0 children
+        if (node->left == NULL || node->right == NULL)
+            //node <- child or NULL
+            node = node->left ? node->left : node->right;
+        // 2 childs
+        else
+        {
+            //rights 
+            node->left.right = node->right;
+            node = node->left;
+        }
+    }
+
 }
 
 void searchNodePrinter (AVL_Node *node, int key) {
