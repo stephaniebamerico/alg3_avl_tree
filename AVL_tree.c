@@ -19,7 +19,7 @@ int maxChildrenHeight (AVL_Node node);
 AVL_Node* insertNode (AVL_Node *node, int key) {
     /* If the node does not exist, it creates 
        and no change in its height is required
-       (sheet has height 0) */
+       (sheet has height 1) */
     if (!node)
         return newNode(key);
     
@@ -36,6 +36,9 @@ AVL_Node* insertNode (AVL_Node *node, int key) {
 
     // Updates node height
     node->height = 1 + maxChildrenHeight(node);
+
+    // Finally, balance the tree (if necessary)
+    node = balance(node);
 }
 
 AVL_Node *removeNode (AVL_Node *node, int key) {
