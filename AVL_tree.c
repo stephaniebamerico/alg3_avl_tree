@@ -7,14 +7,14 @@
 #include <stdlib.h>
 #include "AVL_Tree.h"
 
-void balance (AVL_Node *node);
-AVL_Node* newNode(int key);
-AVL_Node rotateLeft (AVL_Node *node);
-AVL_Node rotateRight (AVL_Node *node);
+void preorder (AVL_Node node);
 int getBalanceFactor (AVL_Node node);
 int maxChildrenHeight (AVL_Node node);
+AVL_Node* newNode(int key);
+AVL_Node* balance (AVL_Node *node);
+AVL_Node* rotateLeft (AVL_Node *node);
+AVL_Node* rotateRight (AVL_Node *node);
 AVL_Node* predecessor (AVL_Node *node);
-void preorder (AVL_Node node);
 
 /* ===== External Functions ===== */
 
@@ -109,6 +109,32 @@ void preorder (AVL_Node node) {
         printf("()" );
 }
 
+int getBalanceFactor (AVL_Node node) {
+    unsigned l, r;
+    l = (node.left)  ? node.left.height  : 0;
+    r = (node.right) ? node.right.height : 0;
+    return (l-r);
+}
+
+int maxChildrenHeight (AVL_Node node) {
+  unsigned l, r;
+    l = (node.left)  ? node.left.height  : 0;
+    r = (node.right) ? node.right.height : 0;
+    return (l > r) ? l : r;
+}
+
+AVL_Node* newNode(int key) {
+    // New node is initially added at leaf
+    AVL_Node* node = 
+        (AVL_Node*) malloc(sizeof(AVL_Node));
+    node->key = key;
+    node->p = NULL;
+    node->left = NULL;
+    node->right = NULL;
+    node->height = 1; // Leaf height is 1
+    return(node);
+}
+
 AVL_Node* balance (AVL_Node *node) {
     unsigned balanceFactor = getBalanceFactor (node);
     /*
@@ -166,32 +192,24 @@ AVL_Node* balance (AVL_Node *node) {
     return (node);
 }
 
-AVL_Node* newNode(int key) {
-    // New node is initially added at leaf
-    AVL_Node* node = 
-        (AVL_Node*) malloc(sizeof(AVL_Node));
-    node->key = key;
-    node->p = NULL;
-    node->left = NULL;
-    node->right = NULL;
-    node->height = 1; // Leaf height is 1
-    return(node);
-}
-
-AVL_Node rotateLeft (AVL_Node *node) {
-
+AVL_Node* rotateLeft (AVL_Node *node) {
+    // Store the child and the grandchild
     AVL_Node auxChild = node->right, auxGranChild = auxChild->left;
     
+    // Rotate left
     auxChild->left = node;
     node->right = auxGranChild;
 
+    //  Updates height
     node->height = 1 + maxChildrenHeight (node);
     auxChild->height = 1 + maxChildrenHeight (auxChild);
+    
+    // Returns the new root
     return (auxChild);
 
 }
 
-AVL_Node rotateRight (AVL_Node *node) {
+AVL_Node* rotateRight (AVL_Node *node) {
     // Store the child and the grandchild
     struct Node *auxChild = node->right;
     struct Node *auxGrandchild = auxChild->left;
@@ -206,20 +224,6 @@ AVL_Node rotateRight (AVL_Node *node) {
  
     // Returns the new root
     return auxChild;
-}
-
-int getBalanceFactor (AVL_Node node) {
-    unsigned l, r;
-    l = (node.left)  ? node.left.height  : 0;
-    r = (node.right) ? node.right.height : 0;
-    return (l-r);
-}
-
-int maxChildrenHeight (AVL_Node node) {
-  unsigned l, r;
-    l = (node.left)  ? node.left.height  : 0;
-    r = (node.right) ? node.right.height : 0;
-    return (l > r) ? l : r;
 }
 
 AVL_Node* predecessor (AVL_Node *node) {
