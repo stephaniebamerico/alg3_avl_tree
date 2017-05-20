@@ -7,5 +7,5 @@ busca: main.o AVL_tree.o
 main.o: main.c 
 	gcc -c main.c $(CFLAGS) 
 
-AVL_tree.o: AVL_tree.h AVL_tree.o
+AVL_tree.o: AVL_tree.h AVL_tree.c
 	gcc -c AVL_tree.c $(CFLAGS) 
