@@ -14,6 +14,7 @@ AVL_Node rotateRight (AVL_Node *node);
 int getBalanceFactor (AVL_Node node);
 int maxChildrenHeight (AVL_Node node);
 AVL_Node* predecessor (AVL_Node *node);
+void preorder (AVL_Node node);
 
 /* ===== External Functions ===== */
 
@@ -94,6 +95,19 @@ void searchNode (AVL_Node *node, int key) {
 }
 
 /* ===== Internal Functions ===== */
+
+void preorder (AVL_Node node) {
+    if (node != NULL) {
+        printf("(" );
+        printf("%d",node->key );
+        preorder(node->left);
+        printf(",");
+        preorder(node->right);
+        printf(")");
+    }
+    else
+        printf("()" );
+}
 
 AVL_Node* balance (AVL_Node *node) {
     unsigned balanceFactor = getBalanceFactor (node);
