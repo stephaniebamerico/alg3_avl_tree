@@ -17,10 +17,15 @@ void removeNode (AVL_Node *node, int key) {
   
 }
 
-void searchNode (AVL_Node *node, int key) {
+void searchNodePrinter (AVL_Node *node, int key) {
     AVL_Node * aux = node;
 
     while (aux) {
+        if(aux == root)
+          printf("%d\n", aux->key);  
+        else
+          printf(",%d\n", aux->key);
+        
         if (aux->key == key)
             return aux;
         else if (aux->key > key)
@@ -28,8 +33,6 @@ void searchNode (AVL_Node *node, int key) {
         else
             aux = aux->right;
     }
-
-    return NULL;
 }
 
 AVL_Node* balance (AVL_Node *node) {
@@ -94,6 +97,7 @@ AVL_Node* newNode(int key) {
         (AVL_Node*) malloc(sizeof(AVL_Node));
     // New node is initially added at leaf
     node->key = key;
+    node->p = NULL;
     node->left = NULL;
     node->right = NULL;
     node->height = 1; // Leaf height is 1
@@ -106,6 +110,21 @@ AVL_Node rotateLeft (AVL_Node *node) {
 
 AVL_Node rotateRight (AVL_Node *node) {
 
+}
+
+AVL_Node* searchNode (AVL_Node *node, int key) {
+    AVL_Node * aux = node;
+
+    while (aux) {
+        if (aux->key == key)
+            return aux;
+        else if (aux->key > key)
+            aux = aux->left;
+        else
+            aux = aux->right;
+    }
+
+    return NULL;
 }
 
 int getBalanceFactor (AVL_Node node) {
