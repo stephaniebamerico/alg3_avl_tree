@@ -112,22 +112,22 @@ struct Node* insert(struct Node* node, int key)
     // If this node becomes unbalanced, then there are 4 cases
  
     // Left Left Case
-    if (balance > 1 && getBalance(node->left) >= 0)
+    if (balance > 1 && key < node->left->key)
         return rightRotate(node);
  
+    // Right Right Case
+    if (balance < -1 && key > node->right->key)
+        return leftRotate(node);
+ 
     // Left Right Case
-    if (balance > 1 && getBalance(node->left) < 0)
+    if (balance > 1 && key > node->left->key)
     {
         node->left =  leftRotate(node->left);
         return rightRotate(node);
     }
  
-    // Right Right Case
-    if (balance < -1 && getBalance(node->right) <= 0)
-        return leftRotate(node);
- 
     // Right Left Case
-    if (balance < -1 && getBalance(node->right) > 0)
+    if (balance < -1 && key < node->right->key)
     {
         node->right = rightRotate(node->right);
         return leftRotate(node);
@@ -179,10 +179,10 @@ struct Node* deleteNode(struct Node* root, int key)
         // node with only one child or no child
         if( (root->left == NULL) || (root->right == NULL) )
         {
-           root = root->left ? root->left :
+            root = root->left ? root->left :
                                              root->right;
  
-          
+           
         }
         else
         {
@@ -244,8 +244,8 @@ void preOrder(struct Node *root)
 {
     if(root != NULL)
     {
-        printf("(" );
-        printf("%d,", root->key);
+        printf("(");
+        printf("%d a = %d ,", root->key, root->height);
         preOrder(root->left);
         printf(",");
         preOrder(root->right);
@@ -261,19 +261,15 @@ int main()
   struct Node *root = NULL;
  
   /* Constructing tree given in the above figure */
+    root = insert(root, 9);
+    root = insert(root, 5);
+    root = insert(root, 10);
+    root = insert(root, 0);
+    root = insert(root, 6);
+    root = insert(root, 11);
+    root = insert(root, -1);
     root = insert(root, 1);
-    preOrder(root);
-    printf("\n");
     root = insert(root, 2);
-    preOrder(root);
-    printf("\n");
-    root = insert(root, 3);
-    preOrder(root);
-    printf("\n");
-    root = insert(root, 4);
-    preOrder(root);
-    printf("\n");
-
  
     /* The constructed AVL Tree would be
             9
@@ -285,9 +281,11 @@ int main()
      -1   2    6
     */
  
-
+    printf("Preorder traversal of the constructed AVL "
+           "tree is \n");
+    preOrder(root);
  
-    root = deleteNode(root, 4);
+    root = deleteNode(root, 5);
  
     /* The AVL Tree after deletion of 10
             1

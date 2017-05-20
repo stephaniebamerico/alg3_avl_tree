@@ -38,7 +38,14 @@ AVL_Node* insertNode (AVL_Node *node, int key) {
     node->height = 1 + maxChildrenHeight(node);
 }
 
-AVL_Node *removeNode (AVL_Node *node, int key) {
+AVL_Node* predecessor (AVL_Node *node) {
+    AVL_Node *aux = node->left;
+    while (aux->right)
+        aux = aux->right;
+    return (aux);
+}
+
+AVL_Node* removeNode (AVL_Node *node, int key) {
     
     if (node == NULL)
         return (node);
@@ -57,12 +64,15 @@ AVL_Node *removeNode (AVL_Node *node, int key) {
         // 2 childs
         else
         {
-            //rights 
-            node->left.right = node->right;
-            node = node->left;
+            AVL_Node *aux = predecessor(node);
+            node->key = aux->key;
+            node.left = removeNode (node->left, aux->key);
         }
     }
 
+    node->height = 1 + maxChildrenHeight(node);
+    nodo = balance (nodo);
+    return (nodo)
 }
 
 void searchNode (AVL_Node *node, int key) {
