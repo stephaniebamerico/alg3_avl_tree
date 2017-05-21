@@ -27,13 +27,13 @@ AVL_Node* insertNode (AVL_Node *node, int key) {
     /* If the node has a key larger than the new entry, 
        it creates the new node in the left subtree. */
     if (node->key > key)
-        insertNode(node->left, key);
+        node->left = insertNode(node->left, key);
 
     /* If the node has a key less than or equal 
        to the new entry, it creates the new node
        in the right subtree. */
     else
-        insertNode(node->right, key);
+        node->right = insertNode(node->right, key);
 
     // Updates node height
     node->height = 1 + maxChildrenHeight(node);
