@@ -219,12 +219,12 @@ AVL_Node* rotateLeft (AVL_Node *node) {
 
 AVL_Node* rotateRight (AVL_Node *node) {
     // Store the child and the grandchild
-    AVL_Node *auxChild = node->right;
-    AVL_Node *auxGrandchild = (auxChild->left) ? auxChild->left : NULL;
+    AVL_Node *auxChild = node->left;
+    AVL_Node *auxGrandchild = (auxChild->right) ? auxChild->right : NULL;
  
     // Rotate right
-    auxChild->left = node;
-    node->right = auxGrandchild;
+    auxChild->right = node;
+    node->left = auxGrandchild;
  
     //  Updates height
     node->height = 1 + maxChildrenHeight(node);
