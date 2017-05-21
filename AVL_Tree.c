@@ -80,15 +80,17 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
 
 void searchNode (AVL_Node *node, int key) {
     AVL_Node * aux = node;
-
+    // As long as the node exists
     while (aux) {
+        // Print the node
         if (aux == node)
           printf("%d", aux->key);  
         else
           printf(",%d", aux->key);
-        
+        // If it found the node, stop searching
         if (aux->key == key)
             aux = NULL;
+        // Otherwise, keep looking
         else if (aux->key > key)
             aux = aux->left;
         else
@@ -113,6 +115,7 @@ void preorder (AVL_Node *node) {
 
 int getBalanceFactor (AVL_Node *node) {
     if (node) {
+        // Returns the balance factor = height(left-child) - height(right-child)
         int l, r;
         l = (node->left)  ? node->left->height  : 0;
         r = (node->right) ? node->right->height : 0;
@@ -123,6 +126,7 @@ int getBalanceFactor (AVL_Node *node) {
 }
 
 int maxChildrenHeight (AVL_Node *node) {
+    // Returns to higher height between the two children
     if (node) {
         unsigned l, r;
         l = (node->left)  ? node->left->height  : 0;
@@ -138,7 +142,6 @@ AVL_Node* newNode(int key) {
     AVL_Node* node = 
         (AVL_Node*) malloc(sizeof(AVL_Node));
     node->key = key;
-    node->p = NULL;
     node->left = NULL;
     node->right = NULL;
     node->height = 1; // Leaf height is 1
@@ -147,7 +150,8 @@ AVL_Node* newNode(int key) {
 
 AVL_Node* balance (AVL_Node *node) {
     int balanceFactor = getBalanceFactor (node);
-    /*
+    
+    /* Case 1:
          (3)        (2)
          /    -->   / \
        (2)        (1) (3)   
@@ -159,7 +163,8 @@ AVL_Node* balance (AVL_Node *node) {
     */
     if (balanceFactor > 1 && getBalanceFactor(node->left) >= 0)
         node = rotateRight(node);
-    /*
+    
+    /* Case 2:
          (5)          (5)              (3)
          /            /                / \
        (2)           (3)             (2) (5)  
@@ -173,7 +178,8 @@ AVL_Node* balance (AVL_Node *node) {
         node->left = rotateLeft(node->left);
         node = rotateRight(node);
     }
-    /*
+
+    /* Case 3:
         (1)           (2)
           \           / \
           (2)  -->  (1) (3)
@@ -186,7 +192,8 @@ AVL_Node* balance (AVL_Node *node) {
     */
     else if (balanceFactor < -1 && getBalanceFactor(node->right) <= 0)
         node = rotateLeft(node);
-    /*
+    
+    /* Case 4:
         (1)             (1)                (3)
           \               \                / \
           (4)             (3)            (1) (4) 
@@ -199,7 +206,8 @@ AVL_Node* balance (AVL_Node *node) {
         node->right = rotateRight(node->right);
         node = rotateLeft(node);
     }
-    return (node);
+
+    return node;
 }
 
 AVL_Node* rotateLeft (AVL_Node *node) {
@@ -238,8 +246,11 @@ AVL_Node* rotateRight (AVL_Node *node) {
 }
 
 AVL_Node* predecessor (AVL_Node *node) {
+    // Returns the highest value of the subtree on the left
     AVL_Node *aux = node->left;
+    
     while (aux->right)
         aux = aux->right;
+    
     return (aux);
 }

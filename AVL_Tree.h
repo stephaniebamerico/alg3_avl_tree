@@ -8,7 +8,6 @@
 
 typedef struct AVL_Node {
 	int key;
-    struct AVL_Node *p;
     struct AVL_Node *left;
     struct AVL_Node *right;
     /* Height of the node, 
