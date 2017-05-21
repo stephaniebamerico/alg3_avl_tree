@@ -111,23 +111,22 @@ struct Node* insert(struct Node* node, int key)
  
     // If this node becomes unbalanced, then there are 4 cases
  
-    // Left Left Case
-    if (balance > 1 && key < node->left->key)
+    if (balance > 1 && getBalance(node->left) >= 0)
         return rightRotate(node);
  
-    // Right Right Case
-    if (balance < -1 && key > node->right->key)
-        return leftRotate(node);
- 
     // Left Right Case
-    if (balance > 1 && key > node->left->key)
+    if (balance > 1 && getBalance(node->left) < 0)
     {
         node->left =  leftRotate(node->left);
         return rightRotate(node);
     }
  
+    // Right Right Case
+    if (balance < -1 && getBalance(node->right) <= 0)
+        return leftRotate(node);
+ 
     // Right Left Case
-    if (balance < -1 && key < node->right->key)
+    if (balance < -1 && getBalance(node->right) > 0)
     {
         node->right = rightRotate(node->right);
         return leftRotate(node);
@@ -260,45 +259,25 @@ int main()
 {
   struct Node *root = NULL;
  
-  /* Constructing tree given in the above figure */
-    root = insert(root, 9);
-    root = insert(root, 5);
-    root = insert(root, 10);
-    root = insert(root, 0);
-    root = insert(root, 6);
-    root = insert(root, 11);
-    root = insert(root, -1);
-    root = insert(root, 1);
-    root = insert(root, 2);
- 
-    /* The constructed AVL Tree would be
-            9
-           /  \
-          1    10
-        /  \     \
-       0    5     11
-      /    /  \
-     -1   2    6
-    */
- 
-    printf("Preorder traversal of the constructed AVL "
-           "tree is \n");
-    preOrder(root);
- 
-    root = deleteNode(root, 5);
- 
-    /* The AVL Tree after deletion of 10
-            1
-           /  \
-          0    9
-        /     /  \
-       -1    5     11
-           /  \
-          2    6
-    */
- 
-    printf("\nPreorder traversal after deletion of 10 \n");
-    preOrder(root);
+    char input;
+    int key;
+
+    while (scanf("%c", &input) > 0) {
+        switch (input) {
+            case 'i':
+                scanf("%d", &key);
+                root = insert(root, key);
+                preOrder(root);
+                printf("\n");
+                break;
+            case 'r':
+                scanf("%d", &key);
+                root = deleteNode(root, key);
+                preOrder(root);
+                printf("\n");
+                break;
+        }
+    }
  
     return 0;
 }

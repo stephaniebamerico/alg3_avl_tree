@@ -109,17 +109,25 @@ void preorder (AVL_Node *node) {
 /* ===== Internal Functions ===== */
 
 int getBalanceFactor (AVL_Node *node) {
-    unsigned l, r;
-    l = (node->left)  ? node->left->height  : 0;
-    r = (node->right) ? node->right->height : 0;
-    return (l-r);
+    if (node) {
+        int l, r;
+        l = (node->left)  ? node->left->height  : 0;
+        r = (node->right) ? node->right->height : 0;
+        return (l-r);
+    }
+
+    return 0;
 }
 
 int maxChildrenHeight (AVL_Node *node) {
-  unsigned l, r;
-    l = (node->left)  ? node->left->height  : 0;
-    r = (node->right) ? node->right->height : 0;
-    return (l > r) ? l : r;
+    if (node) {
+        unsigned l, r;
+        l = (node->left)  ? node->left->height  : 0;
+        r = (node->right) ? node->right->height : 0;
+        return (l > r) ? l : r;
+    }
+
+    return 0;
 }
 
 AVL_Node* newNode(int key) {
@@ -135,7 +143,7 @@ AVL_Node* newNode(int key) {
 }
 
 AVL_Node* balance (AVL_Node *node) {
-    unsigned balanceFactor = getBalanceFactor (node);
+    int balanceFactor = getBalanceFactor (node);
     /*
          (3)        (2)
          /    -->   / \
@@ -147,7 +155,7 @@ AVL_Node* balance (AVL_Node *node) {
     can or not have this child 
     */
     if (balanceFactor > 1 && getBalanceFactor(node->left) >= 0)
-        node = rotateLeft(node);
+        node = rotateRight(node);
     /*
          (5)          (5)              (3)
          /            /                / \
@@ -174,7 +182,7 @@ AVL_Node* balance (AVL_Node *node) {
 
     */
     else if (balanceFactor < -1 && getBalanceFactor(node->right) <= 0)
-        node = rotateRight(node);
+        node = rotateLeft(node);
     /*
         (1)             (1)                (3)
           \               \                / \
@@ -212,7 +220,7 @@ AVL_Node* rotateLeft (AVL_Node *node) {
 AVL_Node* rotateRight (AVL_Node *node) {
     // Store the child and the grandchild
     AVL_Node *auxChild = node->left;
-    AVL_Node *auxGrandchild = (auxChild->right) ? auxChild->right : NULL;
+    AVL_Node *auxGrandchild = auxChild->right;
  
     // Rotate right
     auxChild->right = node;
