@@ -23,6 +23,7 @@ int main() {
             case 'b':
                 scanf("%d", &key);
                 searchNode(root, key);
+                printf("\n");
                 break;
         }
     }

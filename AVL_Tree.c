@@ -83,9 +83,9 @@ void searchNode (AVL_Node *node, int key) {
 
     while (aux) {
         if (aux == node)
-          printf("%d\n", aux->key);  
+          printf("%d", aux->key);  
         else
-          printf(",%d\n", aux->key);
+          printf(",%d", aux->key);
         
         if (aux->key == key)
             aux = NULL;
