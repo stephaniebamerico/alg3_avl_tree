@@ -39,4 +39,5 @@ int main() {
                 break;
         }
     }
+    freeTree(root);
 }

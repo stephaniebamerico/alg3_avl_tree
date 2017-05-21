@@ -55,9 +55,15 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
     // we are on the right node!
     else {
         //if there's 1 or 0 children
-        if (node->left == NULL || node->right == NULL)
-            //node <- child or NULL
+       if (node->left == NULL || node->right == NULL) {
+            AVL_Node *aux;
+            //we use aux to free the node we removed
+            aux = node;
+             //node <- child or NULL
             node = node->left ? node->left : node->right;
+
+            free(aux);
+        }
         // 2 childs
         else
         {
@@ -101,7 +107,7 @@ void searchNode (AVL_Node *node, int key) {
 void preorder (AVL_Node *node) {
     if (node) {
         printf("(" );
-        printf("%d,",node->key );
+        printf("%d,",node->key);
         preorder(node->left);
         printf(",");
         preorder(node->right);
@@ -110,6 +116,17 @@ void preorder (AVL_Node *node) {
     else
         printf("()" );
 }
+
+void freeTree (AVL_Node *node) {
+    if (node->left) {
+        freeTree (node->left);
+    }
+    if (node->right) {
+        freeTree (node->right);
+    }
+    free (node);
+}
+
 
 /* ===== Internal Functions ===== */
 
@@ -239,7 +256,7 @@ AVL_Node* rotateRight (AVL_Node *node) {
  
     //  Updates height
     node->height = 1 + maxChildrenHeight(node);
-    auxChild->height = 1 + maxChildrenHeight(node);
+    auxChild->height = 1 + maxChildrenHeight(auxChild);
  
     // Returns the new root
     return auxChild;
