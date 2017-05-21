@@ -117,6 +117,7 @@ void preorder (AVL_Node *node) {
         printf("()" );
 }
 
+
 void freeTree (AVL_Node *node) {
     if (node->left) {
         freeTree (node->left);
