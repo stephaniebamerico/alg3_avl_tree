@@ -70,6 +70,9 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
         }
     }
 
+    if (node == NULL)
+      return node;
+
     node->height = 1 + maxChildrenHeight(node);
     node = balance (node);
     return (node);
@@ -96,7 +99,7 @@ void searchNode (AVL_Node *node, int key) {
 void preorder (AVL_Node *node) {
     if (node) {
         printf("(" );
-        printf("%d",node->key );
+        printf("%d,",node->key );
         preorder(node->left);
         printf(",");
         preorder(node->right);
