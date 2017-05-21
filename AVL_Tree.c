@@ -7,9 +7,8 @@
 #include <stdlib.h>
 #include "AVL_Tree.h"
 
-void preorder (AVL_Node node);
-int getBalanceFactor (AVL_Node node);
-int maxChildrenHeight (AVL_Node node);
+int getBalanceFactor (AVL_Node *node);
+int maxChildrenHeight (AVL_Node *node);
 AVL_Node* newNode(int key);
 AVL_Node* balance (AVL_Node *node);
 AVL_Node* rotateLeft (AVL_Node *node);
@@ -28,19 +27,19 @@ AVL_Node* insertNode (AVL_Node *node, int key) {
     /* If the node has a key larger than the new entry, 
        it creates the new node in the left subtree. */
     if (node->key > key)
-        insertNode(node->left);
+        insertNode(node->left, key);
 
     /* If the node has a key less than or equal 
        to the new entry, it creates the new node
        in the right subtree. */
     else
-        insertNode(node->right);
+        insertNode(node->right, key);
 
     // Updates node height
     node->height = 1 + maxChildrenHeight(node);
 
     // Finally, balance the tree (if necessary)
-    node = balance(node);
+    return balance(node);
 }
 
 AVL_Node* removeNode (AVL_Node *node, int key) {
@@ -49,10 +48,10 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
         return (node);
     // if key is less than node's key, go to the left
     if (key < node->key) 
-        nodo->left = removeNode (node->left);
+        node->left = removeNode (node->left, key);
     // if key is greater than node's key, go to the right
     else if (key > node->key)
-        node->right = removeNode (node->right);
+        node->right = removeNode (node->right, key);
     // we are on the right node!
     else {
         //if there's 1 or 0 children
@@ -62,31 +61,31 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
         // 2 childs
         else
         {
-            //encontra precessor
+            // find predecessor
             AVL_Node *aux = predecessor(node);
-            // chave do nodo vira chave do precessor
+            // node key becomes predecessor key
             node->key = aux->key;
-            // deleta o nodo do precessor
-            node.left = removeNode (node->left, aux->key);
+            // delete predecessor node
+            node->left = removeNode (node->left, aux->key);
         }
     }
 
     node->height = 1 + maxChildrenHeight(node);
-    nodo = balance (nodo);
-    return (nodo)
+    node = balance (node);
+    return (node);
 }
 
 void searchNode (AVL_Node *node, int key) {
     AVL_Node * aux = node;
 
     while (aux) {
-        if (aux == root)
+        if (aux == node)
           printf("%d\n", aux->key);  
         else
           printf(",%d\n", aux->key);
         
         if (aux->key == key)
-            return aux;
+            aux = NULL;
         else if (aux->key > key)
             aux = aux->left;
         else
@@ -94,10 +93,8 @@ void searchNode (AVL_Node *node, int key) {
     }
 }
 
-/* ===== Internal Functions ===== */
-
-void preorder (AVL_Node node) {
-    if (node != NULL) {
+void preorder (AVL_Node *node) {
+    if (node) {
         printf("(" );
         printf("%d",node->key );
         preorder(node->left);
@@ -109,17 +106,19 @@ void preorder (AVL_Node node) {
         printf("()" );
 }
 
-int getBalanceFactor (AVL_Node node) {
+/* ===== Internal Functions ===== */
+
+int getBalanceFactor (AVL_Node *node) {
     unsigned l, r;
-    l = (node.left)  ? node.left.height  : 0;
-    r = (node.right) ? node.right.height : 0;
+    l = (node->left)  ? node->left->height  : 0;
+    r = (node->right) ? node->right->height : 0;
     return (l-r);
 }
 
-int maxChildrenHeight (AVL_Node node) {
+int maxChildrenHeight (AVL_Node *node) {
   unsigned l, r;
-    l = (node.left)  ? node.left.height  : 0;
-    r = (node.right) ? node.right.height : 0;
+    l = (node->left)  ? node->left->height  : 0;
+    r = (node->right) ? node->right->height : 0;
     return (l > r) ? l : r;
 }
 
@@ -147,7 +146,7 @@ AVL_Node* balance (AVL_Node *node) {
           v
     can or not have this child 
     */
-    if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0)
+    if (balanceFactor > 1 && getBalanceFactor(node->left) >= 0)
         node = rotateLeft(node);
     /*
          (5)          (5)              (3)
@@ -159,8 +158,8 @@ AVL_Node* balance (AVL_Node *node) {
            (4)   (1)
 
     */
-    else if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
-        node.left = rotateLeft(node->left);
+    else if (balanceFactor > 1 && getBalanceFactor(node->left) < 0) {
+        node->left = rotateLeft(node->left);
         node = rotateRight(node);
     }
     /*
@@ -174,7 +173,7 @@ AVL_Node* balance (AVL_Node *node) {
       can or not have this child   
 
     */
-    else if (balanceFactor < -1 && getBalanceFactor(node.right) <= 0)
+    else if (balanceFactor < -1 && getBalanceFactor(node->right) <= 0)
         node = rotateRight(node);
     /*
         (1)             (1)                (3)
@@ -185,8 +184,8 @@ AVL_Node* balance (AVL_Node *node) {
         /                     \
        (2)                    (5)
     */
-    else if (balanceFactor < -1 && getBalanceFactor(node.right) > 0) {
-        node.right = rotateRight(node->right);
+    else if (balanceFactor < -1 && getBalanceFactor(node->right) > 0) {
+        node->right = rotateRight(node->right);
         node = rotateLeft(node);
     }
     return (node);
@@ -194,7 +193,8 @@ AVL_Node* balance (AVL_Node *node) {
 
 AVL_Node* rotateLeft (AVL_Node *node) {
     // Store the child and the grandchild
-    AVL_Node auxChild = node->right, auxGranChild = auxChild->left;
+    AVL_Node *auxChild = node->right;
+    AVL_Node *auxGranChild = auxChild->left;
     
     // Rotate left
     auxChild->left = node;
@@ -211,8 +211,8 @@ AVL_Node* rotateLeft (AVL_Node *node) {
 
 AVL_Node* rotateRight (AVL_Node *node) {
     // Store the child and the grandchild
-    struct Node *auxChild = node->right;
-    struct Node *auxGrandchild = auxChild->left;
+    AVL_Node *auxChild = node->right;
+    AVL_Node *auxGrandchild = auxChild->left;
  
     // Rotate right
     auxChild->left = node;

@@ -19,6 +19,7 @@ typedef struct AVL_Node {
 } AVL_Node;
 
 AVL_Node* insertNode (AVL_Node *node, int key);
-void removeNode (AVL_Node *node, int key); 
+AVL_Node* removeNode (AVL_Node *node, int key); 
 void searchNode (AVL_Node *node, int key);
+void preorder (AVL_Node *node);
 #endif

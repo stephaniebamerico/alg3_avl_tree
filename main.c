@@ -6,19 +6,23 @@ int main() {
     char input;
     int key;
 
-    while (scanf("%c", input) > 0) {
+    while (scanf("%c", &input) > 0) {
         switch (input) {
             case 'i':
-                scanf("%d", key);
-                root = insertNode(key);
+                scanf("%d", &key);
+                root = insertNode(root, key);
+                preorder(root);
+                printf("\n");
                 break;
             case 'r':
-                scanf("%d", key);
-                root = removeNode(key);
+                scanf("%d", &key);
+                root = removeNode(root, key);
+                preorder(root);
+                printf("\n");
                 break;
             case 'b':
-                scanf("%d", key);
-                root = searchNode(key);
+                scanf("%d", &key);
+                searchNode(root, key);
                 break;
         }
     }
