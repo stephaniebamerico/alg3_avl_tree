@@ -4,7 +4,7 @@ Operações em uma AVL
 * Desce na árvore conforme o padrão de uma BST 
     * (chave maior, vai pra direita, chave menor, vai pra esquerda)
 * Aloca um novo nodo pra chave inserida quando encontra a posição
-    * Atualiza a altura da árvore
+* Atualiza a altura da árvore
 * Balanceia a árvore através de rotações à esquerda e à direita
 
 
@@ -20,8 +20,8 @@ Operações em uma AVL
 
 ### Busca 
 * Desce na árvore conforme o padrão de uma BST, porém de forma iterativa
-    *(chave maior, vai pra direita, chave menor, vai pra esquerda)
-*Vai imprimindo cada nodo seguido com uma vírgula antes (menos no nodo inicial)
+    * (chave maior, vai pra direita, chave menor, vai pra esquerda)
+* Vai imprimindo cada nodo seguido com uma vírgula antes (menos no nodo inicial)
 
 
 ## Grupo:
