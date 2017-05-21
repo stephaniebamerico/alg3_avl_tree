@@ -109,25 +109,17 @@ void preorder (AVL_Node *node) {
 /* ===== Internal Functions ===== */
 
 int getBalanceFactor (AVL_Node *node) {
-    if(node) {
-        unsigned l, r;
-        l = (node->left)  ? node->left->height  : 0;
-        r = (node->right) ? node->right->height : 0;
-        return (l-r);
-    }
-
-    return 0;
+    unsigned l, r;
+    l = (node->left)  ? node->left->height  : 0;
+    r = (node->right) ? node->right->height : 0;
+    return (l-r);
 }
 
 int maxChildrenHeight (AVL_Node *node) {
-    if(node) {
-        unsigned l, r;
-        l = (node->left)  ? node->left->height  : 0;
-        r = (node->right) ? node->right->height : 0;
-        return (l > r) ? l : r;
-    }
-
-    return 0;
+  unsigned l, r;
+    l = (node->left)  ? node->left->height  : 0;
+    r = (node->right) ? node->right->height : 0;
+    return (l > r) ? l : r;
 }
 
 AVL_Node* newNode(int key) {
@@ -202,7 +194,7 @@ AVL_Node* balance (AVL_Node *node) {
 AVL_Node* rotateLeft (AVL_Node *node) {
     // Store the child and the grandchild
     AVL_Node *auxChild = node->right;
-    AVL_Node *auxGranChild = (auxChild->left) ? auxChild->left : NULL;
+    AVL_Node *auxGranChild = auxChild->left;
     
     // Rotate left
     auxChild->left = node;
@@ -220,7 +212,7 @@ AVL_Node* rotateLeft (AVL_Node *node) {
 AVL_Node* rotateRight (AVL_Node *node) {
     // Store the child and the grandchild
     AVL_Node *auxChild = node->right;
-    AVL_Node *auxGrandchild = (auxChild->left) ? auxChild->left : NULL;
+    AVL_Node *auxGrandchild = auxChild->left;
  
     // Rotate right
     auxChild->left = node;
