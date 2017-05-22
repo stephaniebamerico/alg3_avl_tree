@@ -13,6 +13,7 @@ int main() {
             case 'i':
                 // Reads the key to be inserted
                 scanf("%d", &key);
+                printf("%c %d\n",input,key );
                 // Insert the node
                 root = insertNode(root, key);
                 // Prints the final tree
@@ -23,6 +24,7 @@ int main() {
             case 'r':
                 // Reads the key to be removed
                 scanf("%d", &key);
+                printf("%c %d\n",input,key );
                 // Remove the node (if any)
                 root = removeNode(root, key);
                 // Prints the final tree
@@ -33,6 +35,7 @@ int main() {
             case 'b':
                 // Reads the key to be searched
                 scanf("%d", &key);
+                printf("%c %d\n",input,key );
                 // Shearch the node
                 searchNode(root, key);
                 printf("\n");
