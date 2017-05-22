@@ -14,8 +14,8 @@ Operações em uma AVL
 * Se o nodo a ser removido tem i filho ou não tem filhos
    *  nodo recebe o filho que tem (ou nulo, se não tem filho)
 * Se o nodo tem dois filhos
-    * chave do nodo recebe chave do precessor
-    * remove nodo predecessor
+    * chave do nodo recebe chave do sucessor
+    * remove nodo sucessor
 
 
 ### Busca 
