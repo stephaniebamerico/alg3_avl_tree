@@ -42,5 +42,5 @@ int main() {
                 break;
         }
     }
-    freeTree(root);
+    if (root) freeTree(root);
 }
