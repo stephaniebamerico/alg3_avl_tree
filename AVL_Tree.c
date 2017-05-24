@@ -267,7 +267,7 @@ AVL_Node* rotateRight (AVL_Node *node) {
 }
 
 AVL_Node* successor (AVL_Node *node) {
-    // Returns the highest value of the subtree on the left
+    // Returns the lowest value of the subtree on the right
     AVL_Node *aux = node->right;
 
     while (aux->left)
