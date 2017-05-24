@@ -13,7 +13,7 @@ AVL_Node* newNode(int key);
 AVL_Node* balance (AVL_Node *node);
 AVL_Node* rotateLeft (AVL_Node *node);
 AVL_Node* rotateRight (AVL_Node *node);
-AVL_Node* successor (AVL_Node *node, int *lado);
+AVL_Node* successor (AVL_Node *node);
 
 /* ===== External Functions ===== */
 
@@ -69,15 +69,13 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
         // 2 childs
         else
         {
-            int lado =0;
             // find successor
-            AVL_Node *aux = successor(node, &lado);
+            AVL_Node *aux = successor(node);
             // node key becomes successor key
             node->key = aux->key;
             // delete successor node
 
-            if (!lado) node->left = removeNode (node->left, aux->key);
-            else node->right = removeNode (node->right, aux->key);
+            node->right = removeNode (node->right, aux->key);
         }
     }
 
@@ -268,15 +266,10 @@ AVL_Node* rotateRight (AVL_Node *node) {
     return auxChild;
 }
 
-AVL_Node* successor (AVL_Node *node, int *lado) {
+AVL_Node* successor (AVL_Node *node) {
     // Returns the highest value of the subtree on the left
     AVL_Node *aux = node->right;
-    if (!aux->left)
-    {
-        *lado = 1;
-        return (aux);
-    }
-    *lado = 0;
+
     while (aux->left)
         aux = aux->left;
     
