@@ -75,7 +75,7 @@ AVL_Node* removeNode (AVL_Node *node, int key) {
             node->key = aux->key;
             // delete successor node
 
-            node->right = removeNode (node->right, aux->key);
+            node->left = removeNode (node->left, aux->key);
         }
     }
 
@@ -268,10 +268,10 @@ AVL_Node* rotateRight (AVL_Node *node) {
 
 AVL_Node* successor (AVL_Node *node) {
     // Returns the lowest value of the subtree on the right
-    AVL_Node *aux = node->right;
+    AVL_Node *aux = node->left;
 
-    while (aux->left)
-        aux = aux->left;
+    while (aux->right)
+        aux = aux->right;
     
     return (aux);
 }
