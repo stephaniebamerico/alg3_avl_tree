@@ -11,11 +11,11 @@ Operações em uma AVL
 ### Remoção
 * Desce na árvore conforme o padrão de uma BST
     * (chave maior, vai pra direita, chave menor, vai pra esquerda)
-* Se o nodo a ser removido tem i filho ou não tem filhos
+* Se o nodo a ser removido tem 1 filho ou não tem filhos
    *  nodo recebe o filho que tem (ou nulo, se não tem filho)
 * Se o nodo tem dois filhos
-    * chave do nodo recebe chave do sucessor
-    * remove nodo sucessor
+    * chave do nodo recebe chave do antecessor
+    * remove nodo antecessor
 
 
 ### Busca 
